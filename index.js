@@ -33,6 +33,12 @@ app.get("/home",(req, res) => {
  app.use("/api/v1/",require("./src/route/userlogin"));
  app.use("/api/v1",require("./src/route/seller"))
  app.use("/api/v1/wish",require("./src/route/wishlist"))
+ app.use("/api/v1/paymentContr",require("./src/route/paymentController"))
+ app.use("/api/v1/scheduleTourr",require("./src/route/scheduleTour"))
+ app.use("/api/v1/offerr",require("./src/route/offer"))
+ app.use("/api/v1/bannerr",require("./src/route/banner"))
+ app.use("/api/v1/loann",require("./src/route/loan"))
+
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

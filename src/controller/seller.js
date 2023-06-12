@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await sellerSchema.findOne({email});
+    const user = await sellerSchema.findOne({ email });
     if (!user) {
       return res.status(400).json({ msg: "Invalid email or password" });
     }
@@ -35,12 +35,12 @@ exports.login = async (req, res) => {
       expiresIn: "1d",
     });
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    user.otp = otp
-    await user.save()
+    user.otp = otp;
+    await user.save();
     res.setHeader("x-api-key", /* "Bearer "*/ +token);
-    res.status(200).json({ message: "Login successful", token: token,otp:otp });
-
-    
+    res
+      .status(200)
+      .json({ message: "Login successful", token: token, otp: otp });
 
     // Store the OTP for the phone number
 
@@ -62,7 +62,6 @@ exports.login = async (req, res) => {
     return res.status(400).send({ message: err.message });
   }
 };
-
 
 exports.verifyseller = async (req, res) => {
   try {
@@ -100,8 +99,6 @@ exports.verifyseller = async (req, res) => {
 
 exports.sellerProfile1 = async (req, res) => {
   try {
-
-
     const hashedPassword = await bcrypt.hash(req.body.password, 8);
     const hashedRePassword = await bcrypt.hash(req.body.RePassword, 8);
     const data = {
@@ -111,7 +108,7 @@ exports.sellerProfile1 = async (req, res) => {
       address: req.body.address,
       email: req.body.email,
       password: hashedPassword,
-      RePassword:  hashedRePassword  ,
+      RePassword: hashedRePassword,
       wantToSell: req.body.wantToSell,
       sellingYourHome: req.body.sellingYourHome,
       area: req.body.area,
@@ -142,6 +139,14 @@ exports.sellerProfile1 = async (req, res) => {
       preApprovalLetter: req.body.preApprovalLetter,
       proofOfFunds: req.body.proofOfFunds,
       OfferAcceptNegotiate: req.body.OfferAcceptNegotiate,
+      exploreNearBYEstate:{
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      },
+      recentlySold:{
+        sold: req.body.sold,
+      date: req.body.date,
+      }
     };
 
     //  const saltRounds = 10;
@@ -159,7 +164,6 @@ exports.sellerProfile1 = async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
-
 
 exports.getAllUser = async (req, res) => {
   try {
@@ -197,7 +201,7 @@ exports.userUpdateseller = async (req, res) => {
       address: req.body.address,
       email: req.body.email,
       password: hashedPassword,
-      RePassword:  hashedRePassword  ,
+      RePassword: hashedRePassword,
       wantToSell: req.body.wantToSell,
       sellingYourHome: req.body.sellingYourHome,
       area: req.body.area,
@@ -228,11 +232,14 @@ exports.userUpdateseller = async (req, res) => {
       preApprovalLetter: req.body.preApprovalLetter,
       proofOfFunds: req.body.proofOfFunds,
       OfferAcceptNegotiate: req.body.OfferAcceptNegotiate,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      recentlySold: req.body.recentlySold,
+      date: req.body.date,
     };
-    
-   
+
     const user = await sellerSchema.findByIdAndUpdate(
-      { _id: req.params.id},
+      { _id: req.params.id },
       data,
       {
         new: true,
@@ -248,33 +255,29 @@ exports.userUpdateseller = async (req, res) => {
   }
 };
 
-
-
 // exports.sellerProfile1 = async (req, res) => {
 //     try {
 //       const { password, RePassword, ...rest } = req.body;
-  
+
 //       // Hash the passwords using bcrypt
 //       const hashedPassword = await bcrypt.hash(password, 8);
 //       const hashedRePassword = await bcrypt.hash(RePassword, 8);
-  
+
 //       const data = {
 //         ...rest,
 //         password: hashedPassword,
 //         RePassword: hashedRePassword
 //       };
-  
+
 //       // Create a new seller profile using the Seller model
 //       const newSeller = await Seller.create(data);
-  
+
 //       res.status(200).json({ message: "Data created successfully", newUser: newSeller });
 //     } catch (err) {
 //       console.log(err);
 //       res.status(500).json({ message: "Internal Server Error" });
 //     }
 //   };
-  
-
 
 exports.deleteseller = async (req, res) => {
   try {
@@ -389,7 +392,6 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-
 exports.getthroughformdata = async (req, res) => {
   try {
     const obj = { ...req.query };
@@ -425,4 +427,3 @@ exports.getthroughformdata = async (req, res) => {
     });
   }
 };
-

@@ -222,7 +222,28 @@ const sellerSchema = mongoose.Schema({
   closingTime:{
     type:String,
     default:""
-  }
+  },
+  exploreNearBYEstate:{
+  latitude:{
+    type:String,
+    default:""
+  },
+  longitude:{
+    type:String,
+    default:""
+  },
+},
+recentlySold:{
+  sold:{
+  type:String,
+  default:""
+},
+date:{
+  type:String,
+  default:""
+},
+}
+
 
 
 
