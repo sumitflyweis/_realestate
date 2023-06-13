@@ -38,6 +38,10 @@ app.get("/home",(req, res) => {
  app.use("/api/v1/offerr",require("./src/route/offer"))
  app.use("/api/v1/bannerr",require("./src/route/banner"))
  app.use("/api/v1/loann",require("./src/route/loan"))
+ app.use("/api/v1/healthh",require("./src/route/healthAndWellness"))
+ app.use("/api/v1/homeinsp",require("./src/route/homeInspector"))
+ app.use("/api/v1/homeserv",require("./src/route/homeserv"))
+//  app.use("/api/v1/ServiceToSelect",require("./src/route/whichServiceToSelect"))
 
 
 app.listen(PORT, () => {
